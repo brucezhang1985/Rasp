@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         id="WebApp_ID" version="3.0">
+
+    <display-name>Raspberry PI</display-name>
+    <description>Raspberry PI3</description>
+    <context-param>
+        <param-name>propfile</param-name>
+        <param-value>properties.properties</param-value>
+    </context-param>
+
+    <servlet>
+        <servlet-name>HealthListServlet</servlet-name>
+        <servlet-class>com.myself.rasp.services.HealthListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HealthListServlet</servlet-name>
+        <url-pattern>/Health</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ControllerServlet</servlet-name>
+        <servlet-class>com.myself.rasp.services.ControllerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ControllerServlet</servlet-name>
+        <url-pattern>/cp</url-pattern>
+    </servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>
