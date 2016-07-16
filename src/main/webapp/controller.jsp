@@ -15,13 +15,14 @@
 <form name="myform" action="/rasp/cp" method="POST">
     <table>
 
-        <tr><td>  <button type="submit" name="healthRun" value="healthRun" >healthRun</button></td></tr>
-        <tr><td>  <button type="submit" name="fanRun" value="fanRun" >fanRun</button></td></tr>
-        <tr><td>  <button type="submit" name="fanClose" value="fanClose" >fanClose</button></td></tr>
-        <tr><td>  <button type="submit" name="bServo" value="bServo" >BottomServo_Angle_Test</button></td></tr>
-        <tr><td>  <button type="submit" name="hServo" value="hServo" >HandServo_Angle_Test</button></td></tr>
-        <tr><td>  <button type="submit" name="moneyStart" value="moneyStart" >money from Start</button></td></tr>
-        <tr><td>  <button type="submit" name="moneyEnd" value="moneyEnd" >money from End</button></td></tr>
+        <tr><td>  <button type="submit" name="healthRun" value="healthRun" >healthRun</button></td><td>  <button type="submit" name="healthRestart" value="healthRestart" >healthRestart</button></td></tr>
+        <tr><td>  <button type="submit" name="moneyStart" value="moneyStart" >money from Start</button></td> <td>  <button type="submit" name="moneyStartRestart" value="moneyStartRestart" >money from start - Restart</button></td><td>  <button type="submit" name="moneyClose" value="moneyClose" >StopMoneyDigger</button></td>    </tr>
+        <tr><td>  <button type="submit" name="moneyEnd" value="moneyEnd" >money from End</button></td>       <td>  <button type="submit" name="moneyEndRestart" value="moneyEndRestart" >money from End - Restart</button></td>         </tr>
+
+        <tr><td>  <button type="submit" name="fanRun" value="fanRun" >fanRun</button></td>                  <td>  <button type="submit" name="fanRestart" value="fanRestart" >fanRestart</button></td></tr>
+        <tr><td>  <button type="submit" name="fanClose" value="fanClose" >fanClose</button></td>            <td>  <button type="submit" name="fanClose" value="fanRestart" >fanCloseRestart</button></td></tr>
+        <tr><td>  <button type="submit" name="bServo" value="bServo" >BottomServo_Angle_Test</button></td>      <td>  <button type="submit" name="bServoRestart" value="bServoRestart" >BottomServo_Angle_Test Restart</button></td></tr>
+        <tr><td>  <button type="submit" name="hServo" value="hServo" >HandServo_Angle_Test</button></td>     <td>  <button type="submit" name="hServoRestart" value="hServoRestart" >HandServo_Angle_Test Restart</button></td>       </tr>
     </table>
 
 </form>
