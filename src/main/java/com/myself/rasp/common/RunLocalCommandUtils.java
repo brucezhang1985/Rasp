@@ -67,30 +67,15 @@ public class RunLocalCommandUtils {
      * @param processName
      * @return
      */
-    private static boolean checkProcessExistence(String processName) {
-        String execute = execute(String.format(MessageUtils.getMessage("checkProcessSH"), processName));
+    public static boolean checkProcessExistence(String processName) {
+        String execute = queryProcess(String.format(MessageUtils.getMessage("checkProcessSH"), processName));
         System.out.println(" CHeck Exist or not processName " + processName + " result: [" + execute + "]");
         return StringUtils.isNotBlank(execute);
     }
 
-    public static void main(String args[]) throws IOException {
-        Process process = null;
-        List<String> processList = new ArrayList<String>();
-        try {
-            process = Runtime.getRuntime().exec(new String[]{"/bin/sh", "-c", "ps -au"});
-            BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line = "";
-            while ((line = input.readLine()) != null) {
-                processList.add(line);
-            }
-            input.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        for (String line : processList) {
-            System.out.println(line);
-        }
+    private static String queryProcess(String processName) {
+        return execute(String.format(MessageUtils.getMessage("checkProcessSH"), processName));
     }
+
 
 }

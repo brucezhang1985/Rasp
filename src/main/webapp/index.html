@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/highlight.css" rel="stylesheet">
+    <link href="css/bootstrap-switch.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+
+
+
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/highlight.js"></script>
+    <script src="js/bootstrap-switch.js"></script>
+    <script src="js/main.js"></script>
+    <![endif]-->
+</head>
+<body>
+<form id="form1" action="/rasp/cp">
+    <div><input type="text" name="a" value="11111a" id="a" /></div>
+    <div><input type="text" name="b" value="2bbbb" id="b" /></div>
+    <div><input type="hidden" name="c" value="3 ccc" id="c" /></div>
+    <div>
+        <textarea name="d" rows="8" cols="40">4dddd</textarea>
+    </div>
+    <div><select name="e">
+        <option value="5值是5" selected="selected">5选择框5</option>
+        <option value="6值是6">6选择可值是6</option>
+        <option value="7">7</option>
+    </select></div>
+    <select id="closeOptions" name="closeOptions" onchange="closeProcess()">
+        <option value="0" selected="select">Select Process</option>
+        <option value="autoStart.py">Money Digger - autoStart.py</option>
+        <option value="health.py">Health Detection - health.py</option>
+    </select>
+    <div>
+        <input type="checkbox" name="f" value="我是checkbox" id="f" />
+    </div>
+    <div>
+        <!-- <input type="submit" name="g" value="Submit" id="g" /> -->
+    </div>
+</form>
+
+
+<!-- <input type="button" value="测试用ajax提交表单" onclick="ajaxForm()"> -->
+<!--<input type="button" value="ajax" onclick="ajaxForm()">-->
+</body>
+</html>
+
+<script type="text/javascript">
+    function closeProcess() {
+        var frm = $('#form1');
+        $.ajax({
+            type: "POST",
+            url: "/rasp/cp",
+            dataType: "json",
+            data: frm.serialize(),
+            success: function (result) {
+
+            }
+        });
+    }
+    function ajaxForm(){
+        //alert($('#form1').serialize());//a=11111a&b=2+name+%3D+b&c=3+name+%3D+c&d=4+name+%3D+d&e=5&f=%E6%88%91%E6%98%AFcheckbox
+        //document.write($('#form1').serialize());
+        $.ajax({
+            type:"POST",
+            async:false,//异步请求  默认为true,设置为false的话,suncess之后，才会继续执行  下面的js
+            //data:"name="+123,
+            data:$('#form1').serialize(),// 你的formid
+            url:"/rasp/cp",
+            success:function(msg){
+                alert(msg);
+            },
+            error:function(msg){
+                alert(msg);
+            }
+
+        });
+        alert(123);
+    }
+
+</script>
+</html>

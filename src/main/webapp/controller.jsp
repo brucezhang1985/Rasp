@@ -1,34 +1,108 @@
-<%@ page import="com.myself.rasp.common.vo.Hlogs" %>
-<%@ page import="java.util.List" %><%--
-  Created by IntelliJ IDEA.
-  User: root
-  Date: 7/15/16
-  Time: 2:36 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Controller</title>
+    <jsp:include page="header.jsp"></jsp:include>
+    <%--<script src="js/jquery1.6.js"></script>--%>
+    <script>
+
+        function formAjaxSubmit() {
+            var frm = $('#myform');
+            $.ajax({
+                type: "POST",
+                url: "/rasp/cp",
+                dataType:"json",
+                data: frm.serialize(),
+                success: function (json) {
+                    if(json.result!=""){
+                        $("#output").val("request success:\n"+json.result);
+                    }
+                },
+                error: function (e) {
+                    alert("error" + e);
+                    console.log(e);
+                },
+                complete: function () {
+                    $("#openOptions").val(0);
+                    $("#closeOptions").val(0);
+                    $("#queryProcessName").val(0);
+                    console.log("complete.")
+                }
+
+            });
+        }
+
+
+    </script>
 </head>
 <body>
-<form name="myform" action="/rasp/cp" method="POST">
+
+<br>
+<form id="myform" name="myform" action="/rasp/cp" method="POST">
     <table>
+        <tr>
+            <td>
+                Open Process:
+                <select id="openOptions" name="openOptions" onchange="formAjaxSubmit()">
+                    <option value="0" selected="select">Select Process</option>
+                    <option value="autoStart.py 1">Money Digger from Start</option>
+                    <option value="autoStart.py 2">Money Digger from End</option>
+                    <option value="health.py">Health Detection - health.py</option>
+                    <option value="fanOpen.py">Open Fan</option>
+                    <option value="fanClose.py">Close Fan</option>
+                </select>
+            </td>
+        </tr>
 
-        <tr><td>  <button type="submit" name="healthRun" value="healthRun" >healthRun</button></td><td>  <button type="submit" name="healthRestart" value="healthRestart" >healthRestart</button></td></tr>
-        <tr><td>  <button type="submit" name="moneyStart" value="moneyStart" >money from Start</button></td> <td>  <button type="submit" name="moneyStartRestart" value="moneyStartRestart" >money from start - Restart</button></td><td>  <button type="submit" name="moneyClose" value="moneyClose" >StopMoneyDigger</button></td>    </tr>
-        <tr><td>  <button type="submit" name="moneyEnd" value="moneyEnd" >money from End</button></td>       <td>  <button type="submit" name="moneyEndRestart" value="moneyEndRestart" >money from End - Restart</button></td>         </tr>
+        <tr>
+            <td>
+                KIll:
+                <select id="closeOptions" name="closeOptions" onchange="formAjaxSubmit()">
+                    <option value="0" selected="select">Select Process</option>
+                    <option value="autoStart.py">Money Digger - autoStart.py</option>
+                    <option value="health.py">Health Detection - health.py</option>
+                </select>
 
-        <tr><td>  <button type="submit" name="fanRun" value="fanRun" >fanRun</button></td>                  <td>  <button type="submit" name="fanRestart" value="fanRestart" >fanRestart</button></td></tr>
-        <tr><td>  <button type="submit" name="fanClose" value="fanClose" >fanClose</button></td>            <td>  <button type="submit" name="fanClose" value="fanRestart" >fanCloseRestart</button></td></tr>
-        <tr><td>  <button type="submit" name="bServo" value="bServo" >BottomServo_Angle_Test</button></td>      <td>  <button type="submit" name="bServoRestart" value="bServoRestart" >BottomServo_Angle_Test Restart</button></td></tr>
-        <tr><td>  <button type="submit" name="hServo" value="hServo" >HandServo_Angle_Test</button></td>     <td>  <button type="submit" name="hServoRestart" value="hServoRestart" >HandServo_Angle_Test Restart</button></td>       </tr>
+            </td>
+
+        </tr>
+
+        <tr>
+            <td>
+                Query:
+                <select id="queryProcessName" name="queryProcessName" onchange="formAjaxSubmit()">
+                    <option value="0" selected="select">Select Process</option>
+                    <option value="autoStart.py">Money Digger - autoStart.py</option>
+                    <option value="health.py">Health Detection - health.py</option>
+                </select>
+            </td>
+
+        </tr>
+
+        <tr>
+            <td>
+                <div class="col-sm-6 col-lg-4">
+                    <h2 class="h4">Animate</h2>
+                    <p>
+                        <input id="switch-animate" type="checkbox" checked data-off-color="info">
+                    </p>
+                    <p>
+                        <button type="button" data-switch-toggle="animate" class="btn btn-default">Toggle</button>
+                        <button type="button" data-switch-get="animate" class="btn btn-default">Get</button>
+                    </p>
+                </div>
+            </td>
+            <td>
+                <button type="submit" name="healthRestart" value="healthRestart">healthRestart</button>
+            </td>
+        </tr>
+
     </table>
 
 </form>
 
 
-<textarea style="width:800px;height:200px;">  <%=request.getAttribute("result")%> </textarea>
+<textarea id="output" style="width:800px;height:200px;">  <%=request.getAttribute("result")%> </textarea>
 
 </body>
 </html>

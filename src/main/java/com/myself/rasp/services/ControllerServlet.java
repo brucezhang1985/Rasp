@@ -1,20 +1,18 @@
 package com.myself.rasp.services;
 
-import com.myself.rasp.common.RunLocalCommandUtils;
-import com.myself.rasp.common.database.MessageUtils;
+import com.myself.rasp.common.BaseServlet;
 import org.apache.commons.lang.StringUtils;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * Created by bruce.zhang on 7/15/16.
  */
-public class ControllerServlet extends HttpServlet {
+public class ControllerServlet extends BaseServlet {
     private static String scriptName = "";
 
     @Override
@@ -24,79 +22,32 @@ public class ControllerServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String healthRun = req.getParameter("healthRun");
-        String moneyStart = req.getParameter("moneyStart");
-        String moneyEnd = req.getParameter("moneyEnd");
+        String closeOptions = req.getParameter("closeOptions");
+        String openOptions = req.getParameter("openOptions");
 
-        String moneyClose = req.getParameter("moneyClose");
-
-        String healthRestart = req.getParameter("healthRestart");
-        String moneyStartRestart = req.getParameter("moneyStartRestart");
-        String moneyEndRestart = req.getParameter("moneyEndRestart");
-
-        String fanRun = req.getParameter("fanRun");
-        String fanClose = req.getParameter("fanClose");
         String bServo = req.getParameter("bServo");
         String hServo = req.getParameter("hServo");
 
-        if (StringUtils.isNotBlank(moneyClose)) {
+        String queryProcessName = req.getParameter("queryProcessName");
 
-            RunLocalCommandUtils.killProcessByName(MessageUtils.getMessage("kill.money.start"));
+        String result = "null";
 
+        if (StringUtils.isNotBlank(queryProcessName) && !"0".equals(queryProcessName)) {
+            result = queryProcessId(queryProcessName);
+            result +="result success";
+        } else if (StringUtils.isNotBlank(closeOptions) && !"0".equals(closeOptions)) {
+            result = killProcessByName(closeOptions);
+            result +="Kill success";
+        } else if (StringUtils.isNotBlank(openOptions) && !"0".equals(openOptions)) {
+            result = executePython(msg("python.homepath"), openOptions);
+            result +="Open success";
         } else {
-            String key = "";
-            if (StringUtils.isNotBlank(healthRun)) {
-                key = "health";
-            } else if (StringUtils.isNotBlank(fanRun)) {
-                key = "fan.open";
-            } else if (StringUtils.isNotBlank(fanClose)) {
-                key = "fan.close";
-            } else if (StringUtils.isNotBlank(moneyStart)) {
-                key = "money.start";
-            } else if (StringUtils.isNotBlank(moneyEnd)) {
-                key = "money.end";
-            } else if (StringUtils.isNotBlank(bServo)) {
-                key = "serInput";
-            } else if (StringUtils.isNotBlank(hServo)) {
-                key = "serHand";
-            }
-
-            String killProcessName = "";
-            boolean needToKill = false;
-            if (StringUtils.isNotBlank(healthRestart)) {
-                killProcessName = MessageUtils.getMessage("kill.health");
-                needToKill = true;
-                key = "health";
-            } else if (StringUtils.isNotBlank(moneyStartRestart)) {
-                killProcessName = MessageUtils.getMessage("kill.money.start");
-                key = "money.start";
-                needToKill = true;
-            } else if (StringUtils.isNotBlank(moneyEndRestart)) {
-                killProcessName = MessageUtils.getMessage("kill.money.start");
-                key = "money.end";
-                needToKill = true;
-            }
-
-            if (needToKill) {
-                System.out.println("KIll process " + killProcessName);
-                if (RunLocalCommandUtils.killProcessByName(killProcessName)) {
-                    System.out.println("KIll successfully");
-                } else {
-                    System.out.println("KIll Failed. ");
-                }
-            }
-
-            String command = "sudo python " + MessageUtils.getMessage(key);
-            String result = RunLocalCommandUtils.execute(command);
-            req.setAttribute("result", result);
+            result = executePython(msg(openOptions));
         }
-        req.setAttribute("result", "");
-
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("controller.jsp");
-        requestDispatcher.forward(req, resp);
-        //sendRedirect this will lost attribute
-//        resp.sendRedirect("/controller.jsp");
+        req.setAttribute("result", result);
+        PrintWriter writer = resp.getWriter();
+        writer.write("{\"result\":\"" + result + "\"" +"}");
+        writer.flush();
+        writer.close();
     }
-
-
 }
