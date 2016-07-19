@@ -11,11 +11,11 @@
             $.ajax({
                 type: "POST",
                 url: "/rasp/cp",
-                dataType:"json",
+                dataType: "json",
                 data: frm.serialize(),
                 success: function (json) {
-                    if(json.result!=""){
-                        $("#output").val("request success:\n"+json.result);
+                    if (json.result != "") {
+                        $("#output").val("request success:\n" + json.result);
                     }
                 },
                 error: function (e) {
@@ -62,9 +62,7 @@
                     <option value="autoStart.py">Money Digger - autoStart.py</option>
                     <option value="health.py">Health Detection - health.py</option>
                 </select>
-
             </td>
-
         </tr>
 
         <tr>
@@ -86,14 +84,8 @@
                     <p>
                         <input id="switch-animate" type="checkbox" checked data-off-color="info">
                     </p>
-                    <p>
-                        <button type="button" data-switch-toggle="animate" class="btn btn-default">Toggle</button>
-                        <button type="button" data-switch-get="animate" class="btn btn-default">Get</button>
-                    </p>
+
                 </div>
-            </td>
-            <td>
-                <button type="submit" name="healthRestart" value="healthRestart">healthRestart</button>
             </td>
         </tr>
 
