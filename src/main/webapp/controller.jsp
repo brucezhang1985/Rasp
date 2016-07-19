@@ -48,6 +48,7 @@
                     <option value="autoStart.py 1">Money Digger from Start</option>
                     <option value="autoStart.py 2">Money Digger from End</option>
                     <option value="health.py">Health Detection - health.py</option>
+                    <option value="DHT11_Python/temperature.py">Open Temperature</option>
                     <option value="fanOpen.py">Open Fan</option>
                     <option value="fanClose.py">Close Fan</option>
                 </select>
@@ -61,6 +62,7 @@
                     <option value="0" selected="select">Select Process</option>
                     <option value="autoStart.py">Money Digger - autoStart.py</option>
                     <option value="health.py">Health Detection - health.py</option>
+                    <option value="temperature.py">Temperature Detection - temperature.py</option>
                 </select>
             </td>
         </tr>
@@ -72,6 +74,7 @@
                     <option value="0" selected="select">Select Process</option>
                     <option value="autoStart.py">Money Digger - autoStart.py</option>
                     <option value="health.py">Health Detection - health.py</option>
+                    <option value="temperature.py">Temperature Detection - temperature.py</option>
                 </select>
             </td>
 
