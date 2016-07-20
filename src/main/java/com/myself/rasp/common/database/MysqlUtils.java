@@ -66,5 +66,28 @@ public class MysqlUtils {
         return result;
     }
 
+    public List queryNormalSQL(String sql) {
+        openConnection();
+        List result = new ArrayList();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+//                String log = resultSet.getString(0);
+//                int id = resultSet.getInt("id");
+
+
+
+//                result.add(hlogs);
+            }
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 
 }
