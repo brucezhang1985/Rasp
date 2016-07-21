@@ -27,7 +27,7 @@ public class RunLocalCommandUtils {
             String s;
             while ((s = bufferedReader.readLine()) != null) {
                 System.out.println("Execute command get result:\n" + s);
-                sb.append(s).append("\n");
+                sb.append(s).append("<br>");
             }
             exec.waitFor();
         } catch (IOException e) {

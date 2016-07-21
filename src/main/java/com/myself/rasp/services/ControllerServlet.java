@@ -32,21 +32,24 @@ public class ControllerServlet extends BaseServlet {
 
         String result = "null";
 
-        if (StringUtils.isNotBlank(queryProcessName) && !"0".equals(queryProcessName)) {
+        if (isNotBlank(queryProcessName) && !"0".equals(queryProcessName)) {
             result = queryProcessId(queryProcessName);
-            result +="result success";
-        } else if (StringUtils.isNotBlank(closeOptions) && !"0".equals(closeOptions)) {
+            result += isNotBlank(result) ? "Query success" : "No result.";
+        } else if (isNotBlank(closeOptions) && !"0".equals(closeOptions)) {
             result = killProcessByName(closeOptions);
-            result +="Kill success";
-        } else if (StringUtils.isNotBlank(openOptions) && !"0".equals(openOptions)) {
+            result += isNotBlank(result) ? "Kill success" : "No result.";
+//            result += "Kill success";
+        } else if (isNotBlank(openOptions) && !"0".equals(openOptions)) {
             result = executePython(msg("python.homepath"), openOptions);
-            result +="Open success";
+            result += "Open success";
         } else {
             result = executePython(msg(openOptions));
         }
         req.setAttribute("result", result);
         PrintWriter writer = resp.getWriter();
-        writer.write("{\"result\":\"" + result + "\"" +"}");
+        writer.write(result);
+//        writer.write("{\"result\":\"" + result + "\"" + "}");
+        writer.flush();
         writer.flush();
         writer.close();
     }

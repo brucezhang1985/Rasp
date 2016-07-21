@@ -11,12 +11,17 @@
             $.ajax({
                 type: "POST",
                 url: "/rasp/cp",
-                dataType: "json",
+//                dataType: "json",
                 data: frm.serialize(),
                 success: function (json) {
-                    if (json.result != "") {
-                        $("#output").val("request success:\n" + json.result);
-                    }
+                    json = json.replace("<br>","\n");
+                    $("#output").val("request success:\n" + json);
+
+//                    if (json.result != "") {
+//                        var rs = eval(json);
+//                        rs = rs.result.replace("<br>","\n");
+//                        $("#output").val("request success:\n" + rs);
+//                    }
                 },
                 error: function (e) {
                     alert("error" + e);
@@ -42,39 +47,41 @@
     <table>
         <tr>
             <td>
-                Open Process:
+                选择程序:
                 <select id="openOptions" name="openOptions" onchange="formAjaxSubmit()">
-                    <option value="0" selected="select">Select Process</option>
-                    <option value="autoStart.py 1">Money Digger from Start</option>
-                    <option value="autoStart.py 2">Money Digger from End</option>
-                    <option value="health.py">Health Detection - health.py</option>
-                    <option value="DHT11_Python/temperature.py">Open Temperature</option>
-                    <option value="fanOpen.py">Open Fan</option>
-                    <option value="fanClose.py">Close Fan</option>
+                    <option value="0" selected="select">选择</option>
+                    <option value="autoStart.py 1">狂野飙车8 Start</option>
+                    <option value="autoStart.py 2">狂野飙车8 End</option>
+                    <option value="health.py">检测睡眠质量</option>
+                    <option value="DHT11_Python/temperature.py">测量温度</option>
+                    <option value="fanOpen.py">打开风扇</option>
+                    <option value="fanClose.py">关闭风扇</option>
                 </select>
             </td>
         </tr>
 
         <tr>
             <td>
-                KIll:
+                关闭程序:
                 <select id="closeOptions" name="closeOptions" onchange="formAjaxSubmit()">
-                    <option value="0" selected="select">Select Process</option>
-                    <option value="autoStart.py">Money Digger - autoStart.py</option>
-                    <option value="health.py">Health Detection - health.py</option>
-                    <option value="temperature.py">Temperature Detection - temperature.py</option>
+                    <option value="0" selected="select">选择</option>
+                    <option value="autoStart.py">狂野飙车8 - autoStart.py</option>
+                    <option value="health.py">睡觉质量检测 - health.py</option>
+                    <option value="temperature.py">温度检测 - temperature.py</option>
                 </select>
             </td>
         </tr>
 
         <tr>
             <td>
-                Query:
+                查看程序:
                 <select id="queryProcessName" name="queryProcessName" onchange="formAjaxSubmit()">
-                    <option value="0" selected="select">Select Process</option>
-                    <option value="autoStart.py">Money Digger - autoStart.py</option>
-                    <option value="health.py">Health Detection - health.py</option>
-                    <option value="temperature.py">Temperature Detection - temperature.py</option>
+                    <option value="0" selected="select">选择</option>
+                    <option value="autoStart.py">狂野飙车8 - autoStart.py</option>
+                    <option value="health.py">睡觉质量检测 - health.py</option>
+                    <option value="temperature.py">温度检测 - temperature.py</option>
+                    <option value="tomcat">Tomcat</option>
+                    <option value="java">java</option>
                 </select>
             </td>
 
@@ -97,7 +104,7 @@
 </form>
 
 
-<textarea id="output" style="width:800px;height:200px;">  <%=request.getAttribute("result")%> </textarea>
+<textarea id="output" style="width:1200px;height:200px;">  <%=request.getAttribute("result")%> </textarea>
 
 </body>
 </html>

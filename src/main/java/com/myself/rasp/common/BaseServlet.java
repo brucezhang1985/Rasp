@@ -45,5 +45,8 @@ public class BaseServlet extends HttpServlet {
     public String msg(String property, String... formats) {
         return String.format(msg(property), formats);
     }
+    public boolean isNotBlank(String str){
+        return StringUtils.isNotBlank(str);
+    }
 
 }
